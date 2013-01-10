@@ -1,6 +1,8 @@
-var HrTimer = require('./hrTimer.js');
+var nanoTimer = require('../lib/nanoTimer.js');
 var mocha = require('mocha');
 var should = require('should');
+
+
 
 
 var task = function(){
