@@ -1,0 +1,12 @@
+{
+  "name": "nanoTimer",
+  "description": "A much higher accuracy timer object that makes use of the node.js hrtime function call.",
+  "version": "0.1",
+  "maintainers": [
+    {
+      "name": "Kevin Briggs",
+      "email": "krb686@gmail.com",
+      "web": ""
+    }
+  ]
+}
