@@ -1,5 +1,5 @@
-nanotimer
-=========
+# nanotimer
+
 
 A much higher accuracy timer object that makes use of the node.js hrtime function call.
 
@@ -13,8 +13,9 @@ var nanoTimer = require('nanotimer');
 ```
 
 
-**.setTimeout(task, timeout, callback)**
-- timeout, specified in nanoseconds.
+## .setTimeout(task, timeout, callback)
+* timeout, specified in nanoseconds.
+* callback is optional
 
 Use:
 ```js
@@ -29,8 +30,9 @@ nanoTimer.setTimeout(task, 1000000000, function(err) {
 });
 ```
 
-**.setInterval(task, interval, callback)**
-- interval, specified in nanoseconds.
+## .setInterval(task, interval, callback)
+* interval, specified in nanoseconds.
+* callback is optional
 
 Use:
 ```js
@@ -46,9 +48,10 @@ nanoTimer.setInterval(task, 1000000000, function(err) {
 });
 ```
 
-**.time(task, callback)**
+## .time(task, callback)
+* callback is optional
 
-Use:
+### Synchronous Use:
 ```js
 var task = function () {
     console.log('My task runs!');
@@ -56,5 +59,12 @@ var task = function () {
 
 var runtime = nanoTimer.time(task);
 
+```
+
+### Asynchronous Use:
+```js
+nanotimer.time(task, function(time){
+	var timeTook = time;
+}
 ```
 
