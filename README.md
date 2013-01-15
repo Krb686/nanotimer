@@ -1,15 +1,30 @@
-# nanotimer
-
+# nanoTimer
 
 A much higher accuracy timer object that makes use of the node.js hrtime function call.
 
 The nanotimer recreates the internal javascript timing functions with higher resolution.
 
+-With the normal timing functions, instead of dealing with the obscurities of multiple setTimeout and 
+setInterval calls, now there is a concrete timer object, each of which can handle exactly 1 timeOut and 
+setInterval task. This also means a reference is needed to clear an interval since each timer object is
+unique.
+
+
 
 ```js
 
-var nanoTimer = require('nanotimer');
+var NanoTimer = require('nanotimer');
 
+var timerA = new NanoTimer();
+
+
+```
+
+Each NanoTimer object's functions work with defined functions as such:
+```js
+var task = function () {
+    console.log('My task runs!');
+};
 ```
 
 
@@ -19,11 +34,8 @@ var nanoTimer = require('nanotimer');
 
 Use:
 ```js
-var task = function () {
-    console.log('My task runs!');
-};
 
-nanoTimer.setTimeout(task, 1000000000, function(err) {
+timerA.setTimeout(task, 1000000000, function(err) {
     if(err) {
         //error
     }
@@ -37,11 +49,7 @@ nanoTimer.setTimeout(task, 1000000000, function(err) {
 Use:
 ```js
 
-var task = function () {
-    console.log('My task runs!');
-};
-
-nanoTimer.setInterval(task, 1000000000, function(err) {
+timerA.setInterval(task, 1000000000, function(err) {
     if(err) {
         //error
     }
@@ -53,18 +61,17 @@ nanoTimer.setInterval(task, 1000000000, function(err) {
 
 ### Synchronous Use:
 ```js
-var task = function () {
-    console.log('My task runs!');
-};
 
-var runtime = nanoTimer.time(task);
+var runtime = timerA.time(task);
 
 ```
 
 ### Asynchronous Use:
 ```js
-nanotimer.time(task, function(time){
-	var timeTook = time;
+timerA.time(task, function(time){
+	var runtime = time;
 }
-```
+
+
+
 
