@@ -1,6 +1,7 @@
-var nanotimer = require('../lib/nanoTimer.js').nanotimer;
+var NanoTimer = require('../lib/nanotimer.js');
 var should = require('should');
 
+var timerA = new NanoTimer();
 
 
 describe('nanoTimer', function(){
@@ -23,7 +24,7 @@ describe('nanoTimer', function(){
             };
             
             for(i=0;i<samples;i++){
-                times.push(nanotimer.time(syncTask));
+                times.push(timerA.time(syncTask, 's'));
             }
             
             
@@ -49,7 +50,8 @@ describe('nanoTimer', function(){
                 i++;
             };
             
-            nanotimer.time(asyncTask, function(time){
+            timerA.time(asyncTask, 's', function(time){
+                should.exist(time);
                 asyncTime = time;
                 done();
             });
@@ -70,7 +72,7 @@ describe('nanoTimer', function(){
                 }; 
             };
             
-            nanotimer.setTimeout(task, 1000000000, function(){
+            timerA.setTimeout(task, 1000000000, function(){
                 done();
             });
  
@@ -99,7 +101,7 @@ describe('nanoTimer', function(){
                 });  
             };
             
-            nanotimer.setTimeout(runAsync, 1000000000, function(err) {
+            timerA.setTimeout(runAsync, 1000000000, function(err) {
                 if (err) {
                     
                 } else {
@@ -120,12 +122,12 @@ describe('nanoTimer', function(){
                 };    
             };
             
-            nanotimer.setInterval(task, 1000000000, function(){
+            timerA.setInterval(task, 1000000000, function(){
                 done();
             });
             
             setTimeout(function(){
-                nanoTimer.clearInterval();
+                timerA.clearInterval();
             }, 3000);
 
         });

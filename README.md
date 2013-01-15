@@ -1,5 +1,5 @@
 # nanoTimer
-# Current Version - 0.1.8
+# Current Version - 0.1.9
 
 A much higher accuracy timer object that makes use of the node.js hrtime function call.
 
@@ -78,6 +78,20 @@ var runtimeSeconds = timerA.time(task, 's');
 timerA.time(task, function(time){
 	var runtime = time;
 }
+
+
+# Tests
+
+* Test suite used is mocha.
+* In order for the test to perform properly, the timeout must be altered.
+* I prefer running tests like `mocha -R spec -t 10000`
+
+![alt text](/test/0.1.9.png "Test Results")
+
+
+
+
+
 
 
 
