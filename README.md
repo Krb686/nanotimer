@@ -33,8 +33,6 @@ var task = function () {
 * Calls task after specified amount of time, timeout (in nanoseconds).
 * timeout, specified in nanoseconds.
 * callback is optional
-
-Use:
 ```js
 
 timerA.setTimeout(task, 1000000000, function(err) {
@@ -48,9 +46,7 @@ timerA.setTimeout(task, 1000000000, function(err) {
 * Repeatedly calls task after every interval amount of nanoseconds.
 * This function is self correcting, error does not propagate through each cycle.
 * interval, specified in nanoseconds.
-* callback is optional
-
-Use:
+* callback is optional, and is only called once the interval is cleared.
 ```js
 
 timerA.setInterval(task, 1000000000, function(err) {
@@ -82,8 +78,6 @@ timerA.time(task, function(time){
 
 ## .clearInterval()
 * Clears current running interval
-
-Use:
 ```js
 timerA.clearInterval();
 ```
