@@ -1,7 +1,7 @@
 # nanoTimer
 # Current Version - 0.1.9
 
-A much higher accuracy timer object that makes use of the node.js hrtime function call.
+A much higher accuracy timer object that makes use of the node.js [hrtime](http://nodejs.org/api/process.html#process_process_hrtime) function call.
 
 The nanotimer recreates the internal javascript timing functions with higher resolution.
 
@@ -80,6 +80,14 @@ timerA.time(task, function(time){
 }
 ```
 
+## .clearInterval()
+* Clears current running interval
+
+Use:
+```js
+timerA.clearInterval();
+```
+
 
 # Tests
 
@@ -88,6 +96,8 @@ timerA.time(task, function(time){
 * I prefer running tests like `mocha -R spec -t 10000`
 
 ![](https://raw.github.com/Krb686/nanotimer/master/test/0.1.9.png "Test Results")
+
+# Performance
 
 
 
