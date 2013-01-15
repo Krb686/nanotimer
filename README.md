@@ -87,7 +87,7 @@ timerA.time(task, function(time){
 * In order for the test to perform properly, the timeout must be altered.
 * I prefer running tests like `mocha -R spec -t 10000`
 
-![](https://github.com/Krb686/nanotimer/blob/master/test/0.1.9.png "Test Results")
+![](https://raw.github.com/Krb686/nanotimer/master/test/0.1.9.png "Test Results")
 
 
 
