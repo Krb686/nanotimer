@@ -9,7 +9,7 @@ describe('nanoTimer', function(){
     describe('.time', function(){
         
         //Test 1 - Synchronous Task Timing
-        it('successfully times a synchronous task', function(){
+        it('#1 synchronous task 1000 samples', function(){
             
             var times = [];
             var i = 0;
@@ -24,7 +24,7 @@ describe('nanoTimer', function(){
             };
             
             for(i=0;i<samples;i++){
-                times.push(timerA.time(syncTask, 's'));
+                times.push(timerA.time(syncTask, 'm'));
             }
             
             
@@ -33,10 +33,12 @@ describe('nanoTimer', function(){
         });
         
         //Test 2 - Asynchronous Task Timing
-        it('successfully times an asynchronous task', function(done){
+        it('#2 asynchronous task 1000 samples', function(done){
             
             var i = 0;
-            var asyncTime = 0;
+            var numSamples = 10;
+            var doneCount = 0;
+            var times = [];
             var asyncTask = function(callback){
                 
                 if(i < 1000){
@@ -50,11 +52,20 @@ describe('nanoTimer', function(){
                 i++;
             };
             
-            timerA.time(asyncTask, 's', function(time){
-                should.exist(time);
-                asyncTime = time;
-                done();
-            });
+            for(var j=0;j<numSamples;j++){
+                timerA.time(asyncTask, 's', function(time){
+                    should.exist(time);
+                    var asyncTime = time;
+                    times.push(asyncTime);
+                    doneCount++;
+                    if(doneCount == numSamples){
+                        done(); 
+                    }
+                    
+                });
+            }
+            
+            
         });
         
         
@@ -64,7 +75,7 @@ describe('nanoTimer', function(){
     //######## timeout function ########
     describe('.setTimeout', function(){
         //Test 3 - sync task
-        it('successfully works with sync tasks\n\n', function(done){
+        it('#3 sync wait 2 seconds\n\n', function(done){
             var task = function(){
                 var count = 0;
                 for(var i=0;i<100000;i++){
@@ -72,25 +83,26 @@ describe('nanoTimer', function(){
                 }; 
             };
             
-            timerA.setTimeout(task, 1000000000, function(){
-                done();
-            });
+            timerA.setTimeout(task, 2000000000);
+            done();
  
         });
         
         //Test 4 - async task
-        it('successfully works with async tasks\n\n', function(done){
-            var i = 0;
-            var asyncTask = function(callback){
+        it('#4 successfully works with async tasks\n\n', function(done){
+            var asyncTask = function(callback, i){
+                if(!i){
+                    var i = 0;
+                }
                 
                 if(i < 1000){
                     process.nextTick(function(){
-                        asyncTask(callback);
+                        i++;
+                        asyncTask(callback, i);
                     });
                 } else {
                     callback('got data');
                 }
-                i++;
             };
             
             var runAsync = function(){
@@ -101,12 +113,8 @@ describe('nanoTimer', function(){
                 });  
             };
             
-            timerA.setTimeout(runAsync, 1000000000, function(err) {
-                if (err) {
-                    
-                } else {
-                    done();
-                }   
+            timerA.setTimeout(runAsync, 1000000000, function() {
+                done();
             });
             
         });
@@ -114,7 +122,7 @@ describe('nanoTimer', function(){
     
     //######## setInterval function ########
     describe('setInterval', function(){
-        it('successfully works\n\n', function(done){
+        it('#5 successfully works\n\n', function(done){
             var task = function(){
                 var count = 0;
                 for(var i=0;i<100000;i++){
@@ -126,9 +134,9 @@ describe('nanoTimer', function(){
                 done();
             });
             
-            setTimeout(function(){
+            timerA.setTimeout(function(){
                 timerA.clearInterval();
-            }, 3000);
+            }, 3000000000);
 
         });
         
