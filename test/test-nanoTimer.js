@@ -13,22 +13,43 @@ describe('nanoTimer', function(){
             
             var times = [];
             var i = 0;
-            var samples = 1000;
+            var numSamples = 1000;
             
+            //Simple count to 1 million task
             var syncTask = function(){
                 var count = 0;
-                for(var i=0;i<1000000;i++){
+                var i = 0;
+                for(i=0;i<1000000;i++){
                     count++;
                 };
-                
             };
             
-            for(i=0;i<samples;i++){
+            //Test numSamples # of times
+            for(i=0;i<numSamples;i++){
                 times.push(timerA.time(syncTask, 'm'));
             }
             
-            
+            //Assertions
             times.length.should.eql(1000);
+            
+            var avg = 0;
+            var max = 0;
+            var min = 1000000000000000000;
+            for(i=0;i<1000;i++){
+                avg+=times[i];
+                if(times[i] > max){
+                    max = times[i];
+                }
+                
+                if(times[i] < min){
+                    min = times[i];
+                }
+            }
+            
+            avg = avg/1000;
+            console.log('\n\t\t - Average time: ' + avg + ' milliseconds');
+            console.log('\t\t - Max time: ' + max + ' milliseconds');
+            console.log('\t\t - Min time: ' + min + ' milliseconds');
             
         });
         
@@ -36,9 +57,12 @@ describe('nanoTimer', function(){
         it('#2 asynchronous task 1000 samples', function(done){
             
             var i = 0;
+            var j = 0;
             var numSamples = 10;
             var doneCount = 0;
             var times = [];
+            
+            //Count to 1000 asynchronously
             var asyncTask = function(callback){
                 
                 if(i < 1000){
@@ -52,23 +76,36 @@ describe('nanoTimer', function(){
                 i++;
             };
             
-            for(var j=0;j<numSamples;j++){
-                timerA.time(asyncTask, 's', function(time){
-                    should.exist(time);
-                    var asyncTime = time;
-                    times.push(asyncTime);
+            //Run 10 instances of async task.
+            for(j=0;j<numSamples;j++){
+                timerA.time(asyncTask, 's', function(runtime){
+                    should.exist(runtime);
+                    times.push(runtime);
                     doneCount++;
                     if(doneCount == numSamples){
+                        var avg = 0;
+                        var max = 0;
+                        var min = 1000000000000000000;
+                        for(i=0;i<10;i++){
+                            avg+=times[i];
+                            if(times[i] > max){
+                                max = times[i];
+                            }
+                
+                            if(times[i] < min){
+                                min = times[i];
+                            }
+                        }
+            
+                        avg = avg/1000;
+                        console.log('\n\t\t - Average time: ' + avg + ' seconds');
+                        console.log('\t\t - Max time: ' + max + ' seconds');
+                        console.log('\t\t - Min time: ' + min + ' seconds');
                         done(); 
                     }
-                    
                 });
-            }
-            
-            
+            } 
         });
-        
-        
     });
     
     
@@ -78,14 +115,19 @@ describe('nanoTimer', function(){
         it('#3 sync wait 2 seconds\n\n', function(done){
             var task = function(){
                 var count = 0;
-                for(var i=0;i<100000;i++){
+                for(var i=0;i<1000000;i++){
                     count++;
                 }; 
             };
+            timerA.setTimeout(task, '2s', function(data){
+                var waitTime = data.waitTime;
+                console.log('\t\t - Expected wait: 2 seconds');
+                console.log('\t\t - Actual wait: ' + waitTime/1000000000 + ' seconds');
+                var waitedLongEnough = (waitTime >= 2000000000);
+                waitedLongEnough.should.be.true;
+                done();
+            });
             
-            timerA.setTimeout(task, 2000000000);
-            done();
- 
         });
         
         //Test 4 - async task
@@ -113,7 +155,12 @@ describe('nanoTimer', function(){
                 });  
             };
             
-            timerA.setTimeout(runAsync, 1000000000, function() {
+            timerA.setTimeout(runAsync, '1s', function(data) {
+                var waitTime = data.waitTime;
+                console.log('\t\t - Expected wait: 1 seconds');
+                console.log('\t\t - Actual wait: ' + waitTime/1000000000 + ' seconds');
+                var waitedLongEnough = (waitTime >= 1000000000);
+                waitedLongEnough.should.be.true;
                 done();
             });
             
@@ -123,20 +170,19 @@ describe('nanoTimer', function(){
     //######## setInterval function ########
     describe('setInterval', function(){
         it('#5 successfully works\n\n', function(done){
+        
             var task = function(){
-                var count = 0;
-                for(var i=0;i<100000;i++){
-                    count++;
-                };    
+                console.log('\t\t - task was run!');
             };
             
-            timerA.setInterval(task, 1000000000, function(){
+            
+            timerA.setInterval(task, '1000s', function(){
                 done();
             });
             
             timerA.setTimeout(function(){
                 timerA.clearInterval();
-            }, 3000000000);
+            }, '3s');
 
         });
         
