@@ -1,4 +1,4 @@
-var NanoTimer = require('../lib/nanotimer.js');
+var NanoTimer = require('../lib/nanoTimer.js');
 var should = require('should');
 
 var timerA = new NanoTimer();
