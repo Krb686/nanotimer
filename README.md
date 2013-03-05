@@ -1,6 +1,8 @@
 # nanoTimer
 # Current Version - 0.2.0
 
+![](https://api.travis-ci.org/Krb686/nanoTimer.png)
+
 A much higher accuracy timer object that makes use of the node.js [hrtime](http://nodejs.org/api/process.html#process_process_hrtime) function call.
 
 The nanotimer recreates the internal javascript timing functions with higher resolution.
@@ -43,7 +45,7 @@ timerA.setTimeout(task, '1s', function(err) {
 });
 ```
 
-## .setInterval(task, '100m', callback)
+## .setInterval(task, interval, callback)
 * Repeatedly calls task after every interval amount of nanoseconds.
 * This function is self correcting, error does not propagate through each cycle.
 * interval, specified as a number plus a letter concatenated into a string. ex - '200u', '150n', '35m', '10s'.
