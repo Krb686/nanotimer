@@ -35,7 +35,7 @@ describe('nanoTimer', function(){
             var avg = 0;
             var max = 0;
             var min = 1000000000000000000;
-            for(i=0;i<1000;i++){
+            for(i=0;i<numSamples;i++){
                 avg+=times[i];
                 if(times[i] > max){
                     max = times[i];
@@ -46,7 +46,7 @@ describe('nanoTimer', function(){
                 }
             }
             
-            avg = avg/1000;
+            avg = avg/numSamples;
             console.log('\n\t\t - Average time: ' + avg + ' milliseconds');
             console.log('\t\t - Max time: ' + max + ' milliseconds');
             console.log('\t\t - Min time: ' + min + ' milliseconds');
@@ -97,7 +97,7 @@ describe('nanoTimer', function(){
                             }
                         }
             
-                        avg = avg/1000;
+                        avg = avg/numSamples;
                         console.log('\n\t\t - Average time: ' + avg + ' seconds');
                         console.log('\t\t - Max time: ' + max + ' seconds');
                         console.log('\t\t - Min time: ' + min + ' seconds');
@@ -176,13 +176,14 @@ describe('nanoTimer', function(){
             };
             
             
-            timerA.setInterval(task, '1000s', function(){
+            timerA.setInterval(task, '1s', function(){
                 done();
             });
             
             timerA.setTimeout(function(){
+                console.log('\t\t - clearing interval');
                 timerA.clearInterval();
-            }, '3s');
+            }, '5s');
 
         });
         
