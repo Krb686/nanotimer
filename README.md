@@ -1,5 +1,5 @@
 # nanoTimer
-# Current Version - 0.2.4
+# Current Version - 0.2.5
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
@@ -18,11 +18,12 @@ unique.
 
 - 3) Errors in timing are also non-cumulative.  For example, when using the setInterval command, the timer counts
 and compares the time difference since starting against the interval length specified and if it has run past the interval, 
-it resets.  If the interval were 1000 milliseconds, and the timer actually got to 1001 milliseconds before resetting, that
+it resets.  If the code had an error of 1 millisecond delay, the timer would actually count to 1001 milliseconds before resetting, and that
 1 millisecond error would propagate through each cycle and add up very quickly!  To solve that problem, rather than resetting
-the interval variable, it is instead incremented with each cycle count.  So on the 2nd cycle, it compares to 2000 milliseconds, 
-and it may run to 2001.  Then 3000 milliseconds, running to 3001, and so on.  This variable will of course overflow eventually,
-so it does reset at a somewhat arbitrarily chosen value of 100 trillion.  This can be changed if necessary.  
+the interval variable each cycle, it is instead incremented with each cycle count.  So on the 2nd cycle, it compares to 2000 milliseconds, 
+and it may run to 2001.  Then 3000 milliseconds, running to 3001, and so on.  This is only limited by the comparison variable potentially overflowing, so I 
+somewhat arbitrarily chose a value of 8 quadrillion (max is roughly 9 quadrillion in javascript) before it resets.  Even using nanosecond resolution however, 
+the comparison variable would reach 8 quadrillion every 8 million seconds, or every 93.6ish days.
 
 ##Usage
 
@@ -35,47 +36,71 @@ var timerA = new NanoTimer();
 
 ```
 
-Each NanoTimer object can run other defined functions like so:
+Each NanoTimer object can run other functions that are already defined.  This can be done in 2 ways, either with a literal function object, or with a function declaration.
+
 ```js
-var task = function () {
-    console.log('My task runs!');
+var NanoTimer = require('nanotimer');
+var timerObject = new NanoTimer();
+
+
+var countToOneBillion = function () {
+    var i = 0;
+    while(i < 1000000000){
+        i++;
+    }
 };
+
+var microsecs = timerObject.time(countToOneBillion, 'u');
+console.log(microsecs);
 ```
 
+or something like this:
+
+```js
+var NanoTimer = require('nanotimer');
+
+function main(){
+    var timerObject = new NanoTimer();
+    
+    var microsecs = timerObject.time(countToOneBillion, 'u');
+    console.log(microsecs);
+}
+
+function countToOneBillion(){
+    var i = 0;
+    while(i < 1000000000){
+        i++;
+    }
+}
+
+main();
+```
+  
 ##Full example
 
 ```js
 var NanoTimer = require('nanotimer');
 
 //create timer
-var timerObject = new NanoTimer();
 
-var checkSomething = function (){
-    console.log('checking something...');
-};
 
-//check something once per second
-timerObject.setInterval(task, '1s');
+function main(){
+    var timerObject = new NanoTimer();
+    
+    timerObject.setInterval(areWeThereYet, '1s');
+    timerObject.setTimeout(slamOnBrakes, '5s');
+    
 
-var stopInterval = function(timer){
-    timer.clearInterval();
+
 }
 
-//Only run setInterval out to 5 seconds
-timerObject.setTimeout(stopInterval, '5s');
-
-
-var reallyIntensiveTask = function(){
-    var i;
-    while(i < 1000000000){
-    	i++;
-    }
+function areWeThereYet(){
+    console.log("Billy: Are we there yet?");
 }
 
-var microseconds = timer.time(reallyIntensiveTask, 'u');
-console.log("That task took " + u + " microseconds.");
-
-
+function slamOnBrakes(){
+    console.log(Dad: "I will turn this car around if you ask one more time!");
+}
 ```
 
 
