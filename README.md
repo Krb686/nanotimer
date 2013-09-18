@@ -104,22 +104,22 @@ function slamOnBrakes(){
 ```
 
 
-## .setTimeout(task, timeout, [callback])
-* Calls function 'task' after specified amount of time.
+## .setTimeout(task, args, timeout, [callback])
+* Calls function 'task' with argument(s) 'args' after specified amount of time, 'timeout'.
 * timeout, specified as a number plus a letter concatenated into a string. ex - '200u', '150n', '35m', '10s'.
 * callback is optional
 
 ```js
 
-timerA.setTimeout(task, '1s', function(err) {
+timerA.setTimeout(task, '', '1s', function(err) {
     if(err) {
         //error
     }
 });
 ```
 
-## .setInterval(task, interval, [callback])
-* Repeatedly calls function 'task' after every interval amount of time. If interval is specified as 0, it will run as fast as possible!
+## .setInterval(task, args, interval, [callback])
+* Repeatedly calls function 'task' with arguments 'args' after every interval amount of time. If interval is specified as 0, it will run as fast as possible!
 * This function is self correcting, error does not propagate through each cycle, as described above.
 * interval, specified as a number plus a letter concatenated into a string. ex - '200u', '150n', '35m', '10s'.
 * callback is optional, and is only called once the interval is cleared.
@@ -133,8 +133,8 @@ timerA.setInterval(task, '100m', function(err) {
 });
 ```
 
-## .time(task, format, [callback])
-* Returns the amount of time taken to run function 'task'.
+## .time(task, args, format, [callback])
+* Returns the amount of time taken to run function 'task', called with arguments 'args'.
 * format specifies the units time will be returned in. Options are 's' for seconds, 'm' for milliseconds, 'u' for microseconds, 
 and 'n' for nanoseconds. if no format is specified, returns the default array of [s, n] where s is seconds and n is nanoseconds.
 * callback is optional
@@ -159,6 +159,11 @@ timerA.time(task, function(time){
 timerA.clearInterval();
 ```
 
+#Logging
+* Added preliminary logging feature.  If a timer is created by passing in 'log', it will enable verbose logging from the timer, so you can
+figure out the real amount of time being taken for setTimeout or setInterval
+* Currently only works on setInterval, and displays the 'cycle time', or real interval time to demonstrate how error does not propagate.  This will 
+be further expanded on.
 
 # Tests
 
