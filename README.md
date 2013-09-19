@@ -1,5 +1,5 @@
 # nanoTimer
-# Current Version - 0.2.5
+# Current Version - 0.2.6
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
@@ -38,6 +38,7 @@ var timerA = new NanoTimer();
 
 Each NanoTimer object can run other functions that are already defined.  This can be done in 2 ways, either with a literal function object, or with a function declaration.
 
+### By function object
 ```js
 var NanoTimer = require('nanotimer');
 var timerObject = new NanoTimer();
@@ -55,6 +56,8 @@ console.log(microsecs);
 ```
 
 or something like this:
+
+### by function declaration
 
 ```js
 var NanoTimer = require('nanotimer');
@@ -81,41 +84,48 @@ main();
 ```js
 var NanoTimer = require('nanotimer');
 
-//create timer
+var count = 10;
 
 
 function main(){
-    var timerObject = new NanoTimer();
+    var timer = new NanoTimer();
     
-    timerObject.setInterval(areWeThereYet, '1s');
-    timerObject.setTimeout(slamOnBrakes, '5s');
+    timer.setInterval(countDown, '', '1s');
+    timer.setTimeout(liftOff, [timer], '10s');
     
 
 
 }
 
-function areWeThereYet(){
-    console.log("Billy: Are we there yet?");
+function countDown(){
+    console.log('T - ' + count);
+    count--;
 }
 
-function slamOnBrakes(){
-    console.log(Dad: "I will turn this car around if you ask one more time!");
+function liftOff(timer){
+    timer.clearInterval();
+    console.log('And we have liftoff!');
 }
+
+main();
 ```
 
 
 ## .setTimeout(task, args, timeout, [callback])
 * Calls function 'task' with argument(s) 'args' after specified amount of time, 'timeout'.
 * timeout, specified as a number plus a letter concatenated into a string. ex - '200u', '150n', '35m', '10s'.
-* callback is optional
-
+* callback is optional.  If it is specified, it is called when setTimeout runs it's assigned task, and it is sent a parameter that
+tells the actuam amount of time that passed before the specifed task was run, in nanoseconds.
 ```js
 
-timerA.setTimeout(task, '', '1s', function(err) {
-    if(err) {
-        //error
-    }
-});
+console.log("It's gonna be legen-wait for it...");
+
+timerA.setTimeout(dary, '', '2s');
+
+function dary(){
+    console.log("dary!!");
+}
+    
 ```
 
 ## .setInterval(task, args, interval, [callback])
@@ -139,24 +149,52 @@ timerA.setInterval(task, '100m', function(err) {
 and 'n' for nanoseconds. if no format is specified, returns the default array of [s, n] where s is seconds and n is nanoseconds.
 * callback is optional
 
-### Synchronous Use:
+### Synchronous Example:
 ```js
 
-var runtimeSeconds = timerA.time(task, 's');
+var runtimeSeconds = timerA.time(doMath, 'u');
+
+function doMath(){
+    //do math
+}
 
 ```
 
-### Asynchronous Use:
+### Asynchronous Use: (yes, it can time asynchronous stuff! here's how)
+
+In order to time something asynchronous, it's not surprise that the timer object must somehow be notified whenever that asynchronous task finishes.
+To do that, you must have your function accept a callback, and manually call the callback (to the timer function) inside of the asynchronous task's
+callback. It's essentially a chain of callbacks, which is probably already familiar to you. Here's an example that times how long it takes to read a file. 
 ```js
-timerA.time(task, function(time){
-	var runtime = time;
+var NanoTimer = require('nanotimer');
+var fs = require('fs');
+
+var timer = new NanoTimer();
+
+
+timer.time(loadFile, '', 'u', function(time){
+    console.log("It took " + time + " microseconds to read that file!");
+});
+
+function loadFile(callback){
+    fs.readFile('testReadFile.js', function(err, data){
+        if(err) throw err;
+        console.log(data);
+        
+        callback();
+    });
 }
 ```
+
+Once again, just two changes from normal.  First, your function to be timed, in this case 'loadFile' (which is just a proxy function to perfom fs.readFile) must
+accept a callback parameter.  Second, in the callback of whatever asynchronous task is being performed inside the proxy, the callback passed in must be called after everything
+is finished.  Internally, an unnamed function is presented as the callback to whatever the task is.  That callback that you call manually immediately takes the 2nd reference time,
+and then calls the callback visible to it inside the timer, the callback function you specified to timer.time.
 
 ## .clearInterval()
 * Clears current running interval
 ```js
-timerA.clearInterval();
+timer.clearInterval();
 ```
 
 #Logging
