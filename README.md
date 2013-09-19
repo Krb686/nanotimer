@@ -112,8 +112,8 @@ main();
 
 ### In the above example, the interval can also be cleared another way rather than having to pass in the timer object to the liftOff task.
 Instead, it can be done by specifying a callback to setTimeout, since the timer object will exist in that scope.  Like so:
-```js
 
+```js
 timer.setTimeout(liftOff, '', '10s', function(){
     timer.clearInterval();
 });
@@ -125,8 +125,8 @@ timer.setTimeout(liftOff, '', '10s', function(){
 * timeout, specified as a number plus a letter concatenated into a string. ex - '200u', '150n', '35m', '10s'.
 * callback is optional.  If it is specified, it is called when setTimeout runs it's assigned task, and it is sent a parameter that
 tells the actuam amount of time that passed before the specifed task was run, in nanoseconds.
-```js
 
+```js
 console.log("It's gonna be legen-wait for it...");
 
 timerA.setTimeout(dary, '', '2s');
@@ -134,7 +134,6 @@ timerA.setTimeout(dary, '', '2s');
 function dary(){
     console.log("dary!!");
 }
-    
 ```
 
 ## .setInterval(task, args, interval, [callback])
@@ -144,7 +143,6 @@ function dary(){
 * callback is optional, and is only called once the interval is cleared.
 
 ```js
-
 timerA.setInterval(task, '100m', function(err) {
     if(err) {
         //error
