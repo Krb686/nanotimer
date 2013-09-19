@@ -110,6 +110,15 @@ function liftOff(timer){
 main();
 ```
 
+### In the above example, the interval can also be cleared another way rather than having to pass in the timer object to the liftOff task.
+Instead, it can be done by specifying a callback to setTimeout, since the timer object will exist in that scope.  Like so:
+```js
+
+timer.setTimeout(liftOff, '', '10s', function(){
+    timer.clearInterval();
+});
+```
+
 
 ## .setTimeout(task, args, timeout, [callback])
 * Calls function 'task' with argument(s) 'args' after specified amount of time, 'timeout'.
