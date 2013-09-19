@@ -217,7 +217,7 @@ be further expanded on.
 * In order for the test to perform properly, the timeout must be altered.
 * I prefer running tests with `mocha -R spec -t 10000`
 
-![](https://raw.github.com/Krb686/nanotimer/master/test/0.2.3_test.png "Test Results")
+![](https://raw.github.com/Krb686/nanotimer/master/test/nanotimer_0_2_6_test_partial.png "Test Results")
 
 # Performance
 
