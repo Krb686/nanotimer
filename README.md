@@ -1,5 +1,5 @@
 # nanoTimer
-# Current Version - 0.3.0
+# Current Version - 0.3.1
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
@@ -221,7 +221,21 @@ be further expanded on.
 
 # Performance
 
--Soon to be added
+Version 0.3.1 brings about a potentially massive performance boost over previous versions.
+
+Previous versions used a setImmediate loop running as fast as possible for checking when to execute, inside setTimeout and setInterval.
+In 0.3.1, this has changed when using an intervalTime (setInterval), or delayTime (setTimeout) that is longer than 25ms.  Execution will be deferred to the standard
+javascript setTimeout, aimed for 25ms before scheduled execution, where the setImmediate loop will resume.
+
+The assumed error of javascript's setTimeout is 25ms.
+
+Below is a test case with setInterval set to 1 second.
+
+![](https://raw.github.com/Krb686/nanotimer/master/test/nanotimer_non_deferred.png "Non-Deferred")
+
+![](https://raw.github.com/Krb686/nanotimer/master/test/nanotimer_deferred.png "Deferred")
+
+
 
 
 
