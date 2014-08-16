@@ -1,7 +1,9 @@
 # nanoTimer
-# Current Version - 0.3.2
+# Current Version - 0.3.3
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
+
+[![NPM](https://nodei.co/npm/nanotimer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nanotimer/)
 
 A much higher accuracy timer object that makes use of the node.js [hrtime](http://nodejs.org/api/process.html#process_process_hrtime) function call.
 
