@@ -2,21 +2,21 @@
   "name": "nanotimer",
   "main": "./lib/nanoTimer.js",
   "description": "A much higher accuracy timer object that makes use of the node.js hrtime function call.",
-  "version": "0.3.1",
-  "authors":[
-  	"Kevin Briggs <krb686@gmail.com> (https://github.com/Krb686)"
+  "version": "0.3.2",
+  "authors": [
+    "Kevin Briggs <krb686@gmail.com> (https://github.com/Krb686)"
   ],
   "keywords": [
-	"timer",
-	"nanotimer",
-	"nano",
-	"nanoseconds",
-	"micro",
-	"microseconds",
-	"stopwatch"
+    "timer",
+    "nanotimer",
+    "nano",
+    "nanoseconds",
+    "micro",
+    "microseconds",
+    "stopwatch"
   ],
-  "repository" : {
-  	"type" : "git",
-  	"url" : "https://github.com/Krb686/nanotimer.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Krb686/nanotimer.git"
   }
 }
