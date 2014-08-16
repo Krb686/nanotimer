@@ -6,6 +6,15 @@
   "authors":[
   	"Kevin Briggs <krb686@gmail.com> (https://github.com/Krb686)"
   ],
+  "keywords": [
+	"timer",
+	"nanotimer",
+	"nano",
+	"nanoseconds",
+	"micro",
+	"microseconds",
+	"stopwatch"
+  ],
   "repository" : {
   	"type" : "git",
   	"url" : "https://github.com/Krb686/nanotimer.git"

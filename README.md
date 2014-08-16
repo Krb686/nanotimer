@@ -1,5 +1,5 @@
 # nanoTimer
-# Current Version - 0.3.1
+# Current Version - 0.3.2
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
@@ -124,7 +124,7 @@ timer.setTimeout(liftOff, '', '10s', function(){
 * Calls function 'task' with argument(s) 'args' after specified amount of time, 'timeout'.
 * timeout, specified as a number plus a letter concatenated into a string. ex - '200u', '150n', '35m', '10s'.
 * callback is optional.  If it is specified, it is called when setTimeout runs it's assigned task, and it is sent a parameter that
-tells the actuam amount of time that passed before the specifed task was run, in nanoseconds.
+tells the actual amount of time that passed before the specifed task was run, in nanoseconds.
 
 ```js
 console.log("It's gonna be legen-wait for it...");
@@ -169,9 +169,10 @@ function doMath(){
 
 ### Asynchronous Use: (yes, it can time asynchronous stuff! here's how)
 
-In order to time something asynchronous, it's not surprise that the timer object must somehow be notified whenever that asynchronous task finishes.
-To do that, you must have your function accept a callback, and manually call the callback (to the timer function) inside of the asynchronous task's
-callback. It's essentially a chain of callbacks, which is probably already familiar to you. Here's an example that times how long it takes to read a file. 
+In order to time something asynchronous, it's no surprise that the timer object must somehow be notified whenever that asynchronous task finishes.
+To do that, you must have your function to be timed accept a callback as a parameter, and manually call that callback (to the timer function) inside of the asynchronous task's
+callback. It's essentially a chain of callbacks, which is probably already familiar to you. Here's an example that times how long it takes to read a file.
+Suppose you're using node.js's fs.ReadFile, which is asynchronous, then create a wrapper like so: 
 ```js
 var NanoTimer = require('nanotimer');
 var fs = require('fs');
@@ -195,8 +196,7 @@ function loadFile(callback){
 
 Once again, just two changes from normal.  First, your function to be timed, in this case 'loadFile' (which is just a proxy function to perfom fs.readFile) must
 accept a callback parameter.  Second, in the callback of whatever asynchronous task is being performed inside the proxy, the callback passed in must be called after everything
-is finished.  Internally, an unnamed function is presented as the callback to whatever the task is.  That callback that you call manually immediately takes the 2nd reference time,
-and then calls the callback visible to it inside the timer, the callback function you specified to timer.time.
+is finished. That callback that you call manually immediately takes the 2nd reference time, and then calls your callback specified in timer.time, ending the process.
 
 ## .clearInterval()
 * Clears current running interval
