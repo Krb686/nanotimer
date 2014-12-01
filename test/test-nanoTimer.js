@@ -108,7 +108,7 @@ describe('nanoTimer', function(){
     
     
     //######## timeout function ########
-    describe('.setTimeout', function(){
+    describe('.setTimeout && clearTimeout', function(){
         //Test 3 - sync task
         it('#3: sync, wait 0.1 seconds, 20 samples\n\n', function(done){
             var i = 0;
@@ -205,7 +205,7 @@ describe('nanoTimer', function(){
             
         });
         
-        
+        //Test #5 - timeout with args passed
         it('#5 works with functions with args passed in\n\n', function(done){
             var someObject = {};
             someObject.number = 10;
@@ -229,12 +229,41 @@ describe('nanoTimer', function(){
             
             
         });
+		
+		//Test #6 - clearTimeout works
+		it('#6 clearTimeout before task is run - works\n\n', function(done){
+		
+		
+			var value = 0;
+			
+			var task = function(){
+				console.log('\t\t #6 task was run!');
+				value++;
+			};
+			
+			timerA.setTimeout(task, [], '1s', function(data){
+				var waitTime = data.waitTime;
+				console.log('\t\t - Expected wait: 1 second');
+				console.log('\t\t - Actual wait: ' + waitTime/1000000000 + ' seconds');
+				var waitedShortEnough = (waitTime < 1000000000);
+				waitedShortEnough.should.be.true;
+				value.should.eql(0);
+				done();
+			});
+			
+			timerA.clearTimeout();
+			
+		});
+		
+		
         
     });
     
     //######## setInterval function ########
     describe('setInterval && clearInterval', function(){
-        it('#6 successfully works\n\n', function(done){
+	
+		//Test #7 - setInterval works
+        it('#7 successfully works\n\n', function(done){
         
             var task = function(){
                 console.log('\t\t - task was run!');

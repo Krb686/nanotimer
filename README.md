@@ -1,5 +1,5 @@
 # nanoTimer
-# Current Version - 0.3.3
+# Current Version - 0.3.4
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
@@ -204,6 +204,12 @@ is finished. That callback that you call manually immediately takes the 2nd refe
 * Clears current running interval
 ```js
 timer.clearInterval();
+```
+
+## .clearTimeout()
+* Clears current running timeOut
+```js
+timer.clearTimeout();
 ```
 
 #Logging
