@@ -2,7 +2,7 @@
   "name": "nanotimer",
   "main": "./lib/nanoTimer.js",
   "description": "A much higher accuracy timer object that makes use of the node.js hrtime function call.",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "authors": [
     "Kevin Briggs <krb686@gmail.com> (https://github.com/Krb686)"
   ],
