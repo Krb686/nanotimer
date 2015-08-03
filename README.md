@@ -53,7 +53,7 @@ var countToOneBillion = function () {
     }
 };
 
-var microsecs = timerObject.time(countToOneBillion, 'u');
+var microsecs = timerObject.time(countToOneBillion, '', 'u');
 console.log(microsecs);
 ```
 
@@ -67,7 +67,7 @@ var NanoTimer = require('nanotimer');
 function main(){
     var timerObject = new NanoTimer();
     
-    var microsecs = timerObject.time(countToOneBillion, 'u');
+    var microsecs = timerObject.time(countToOneBillion, '', 'u');
     console.log(microsecs);
 }
 
@@ -161,7 +161,7 @@ and 'n' for nanoseconds. if no format is specified, returns the default array of
 ### Synchronous Example:
 ```js
 
-var runtimeSeconds = timerA.time(doMath, 'u');
+var runtimeSeconds = timerA.time(doMath, '', 'u');
 
 function doMath(){
     //do math
