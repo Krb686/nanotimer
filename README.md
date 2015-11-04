@@ -208,6 +208,7 @@ function doMath(){
 
 ### Asynchronous Use:
 To time something asynchronous, you only need to do these 3 things:
+
 1. create a small wrapper function around the asynchronous task.
 2. make the wrapper function take *callback* as a parameter.
 3. manually call the *callback* parameter inside the callback of the asynchronous task.
