@@ -1,4 +1,4 @@
-var NanoTimer = require('../lib/nanoTimer.js');
+var NanoTimer = require('../lib/nanotimer.js');
 var should = require('should');
 
 var timerA = new NanoTimer('log');
@@ -280,6 +280,71 @@ describe('nanoTimer', function(){
             }, [], '5s');
 
         });
+
+		it('#8 setInterval with interval = 0: incrementing a variable as fast as possible.', function(done){
+
+			var i=0;
+			var taskCount = 0;
+
+			var task = function(){
+				i++;
+			}
+
+			var launchTask = function(){
+				console.log("Task is being launched!");
+				timerA.setInterval(task, [], '0s', function(){
+					console.log("Task count = " + taskCount);
+					if(taskCount < 10){
+						console.log("relaunching");
+						taskCount++;
+						console.log("i = " + i);
+						i = 0;
+						launchTask();
+					} else {
+						console.log("Test #8 done!")
+						done();
+					}
+				});
+
+				console.log("T8 - setting timeout");
+				timerA.setTimeout(function(){
+					console.log('\t\t T8 - clearing interval');
+					timerA.clearInterval();
+				}, [], '0.2s');
+			}
+
+			console.log("starting the initial task");
+			// Trigger the first launch
+			launchTask();
+
+		});
+
+		it('#9 setInterval - clearing interval from within the task.', function(done){
+
+			
+			console.log("Starting test #9");	
+				
+			var task = function(){
+				console.log("Running some task!");
+				var i = 0;
+				while(i<1000){
+					i++;
+					console.log("in loop");
+				}
+				console.log("Clearing the interval");
+				timerA.clearInterval();
+			};
+
+			timerA.setInterval(task, [], '5s', function(){
+				console.log("Test #9 done!");
+				done();
+
+
+			});
+			
+			
+
+		});
         
     });
     
