@@ -319,30 +319,47 @@ describe('nanoTimer', function(){
 
 		});
 
-		it('#9 setInterval - clearing interval from within the task.', function(done){
+		it('#9 setInterval - clearing interval from within the task, non-zero timeout', function(done){
 
 			
-			console.log("Starting test #9");	
+			console.log("Starting test #9");
+			console.log("Clearing the interval from the task, zon-zero timeout");
 				
 			var task = function(){
 				console.log("Running some task!");
 				var i = 0;
-				while(i<1000){
+				while(i<100){
 					i++;
-					console.log("in loop");
 				}
 				console.log("Clearing the interval");
 				timerA.clearInterval();
 			};
 
-			timerA.setInterval(task, [], '5s', function(){
+			timerA.setInterval(task, [], '1s', function(){
 				console.log("Test #9 done!");
 				done();
 
 
 			});
-			
-			
+		});
+
+		it('#10 setInterval - clearing the interval from within the task, zero timeout', function(done){
+
+			console.log("Starting test #10");
+			console.log("Clearing the interval from the task, zero timeout");
+			var i=0;
+			var task = function(){
+				if(i < 10){
+					console.log("i = " + i);
+					i++;
+				} else {
+					timerA.clearInterval();
+				}
+			};
+
+			timerA.setInterval(task, [], '0s', function(){
+				done();
+			});
 
 		});
         
