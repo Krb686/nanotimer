@@ -1,5 +1,5 @@
 # nanotimer
-# Current Version - 0.3.11
+# Current Version - 0.3.12
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
