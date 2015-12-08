@@ -104,6 +104,15 @@ describe('nanoTimer', function(){
                 });
             } 
         });
+
+        it('asnyc: make sure callback format is correct', function(done) {
+            timerA.time(function methodReturningAfterApprox2000ms(callback) {
+                setTimeout(callback, 2000);
+            }, '', 'm', function resultCallback(timeTakenInMs) {
+                timeTakenInMs.should.be.within(1900, 2100);
+                done();
+            });
+        });
     });
     
     
