@@ -5,6 +5,8 @@ var timerA = new NanoTimer('log');
 
 
 describe('nanoTimer', function(){
+    this.timeout(60 * 1000);
+
     //######## time function #########
     describe('.time', function(){
         

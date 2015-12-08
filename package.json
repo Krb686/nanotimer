@@ -18,5 +18,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Krb686/nanotimer.git"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "should": "^7.1.1"
+  },
+  "scripts": {
+    "test": "mocha"
   }
 }
