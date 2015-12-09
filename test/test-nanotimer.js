@@ -107,11 +107,13 @@ describe('nanoTimer', function(){
             } 
         });
 
-        it('asnyc: make sure callback format is correct', function(done) {
+        it('#3: asnyc - make sure callback format is correct', function(done) {
             timerA.time(function methodReturningAfterApprox2000ms(callback) {
                 setTimeout(callback, 2000);
             }, '', 'm', function resultCallback(timeTakenInMs) {
                 timeTakenInMs.should.be.within(1900, 2100);
+				console.log('\t\t - Time taken should be between 1900-2100 ms');
+				console.log('\t\t - Time taken: ' + timeTakenInMs);
                 done();
             });
         });
@@ -120,8 +122,8 @@ describe('nanoTimer', function(){
     
     //######## timeout function ########
     describe('.setTimeout && clearTimeout', function(){
-        //Test 3 - sync task
-        it('#3: sync, wait 0.1 seconds, 20 samples\n\n', function(done){
+        //Test 4 - sync task
+        it('#4: sync, wait 0.1 seconds, 20 samples\n\n', function(done){
             var i = 0;
             var j = 0;
             var numSamples = 20;
@@ -179,8 +181,8 @@ describe('nanoTimer', function(){
             
         });
         
-        //Test 4 - async task
-        it('#4: setTimeout on async function with callback\n\n', function(done){
+        //Test 5 - async task
+        it('#5: setTimeout on async function with callback\n\n', function(done){
             var asyncTask = function(callback, i){
                 if(!i){
                     var i = 0;
@@ -216,8 +218,8 @@ describe('nanoTimer', function(){
             
         });
         
-        //Test #5 - timeout with args passed
-        it('#5 works with functions with args passed in\n\n', function(done){
+        //Test #6 - timeout with args passed
+        it('#6 works with functions with args passed in\n\n', function(done){
             var someObject = {};
             someObject.number = 10;
         
@@ -241,8 +243,8 @@ describe('nanoTimer', function(){
             
         });
 		
-		//Test #6 - clearTimeout works
-		it('#6 clearTimeout before task is run - works\n\n', function(done){
+		//Test #7 - clearTimeout works
+		it('#7 clearTimeout before task is run - works\n\n', function(done){
 		
 		
 			var value = 0;
@@ -273,8 +275,8 @@ describe('nanoTimer', function(){
     //######## setInterval function ########
     describe('setInterval && clearInterval', function(){
 	
-		//Test #7 - setInterval works
-        it('#7 successfully works\n\n', function(done){
+		//Test #8 - setInterval works
+        it('#8 successfully works\n\n', function(done){
         
             var task = function(){
                 console.log('\t\t - task was run!');
@@ -292,7 +294,7 @@ describe('nanoTimer', function(){
 
         });
 
-		it('#8 setInterval with interval = 0: incrementing a variable as fast as possible.', function(done){
+		it('#9 setInterval with interval = 0: incrementing a variable as fast as possible.', function(done){
 
 			var i=0;
 			var taskCount = 0;
@@ -330,7 +332,7 @@ describe('nanoTimer', function(){
 
 		});
 
-		it('#9 setInterval - clearing interval from within the task, non-zero timeout', function(done){
+		it('#10 setInterval - clearing interval from within the task, non-zero timeout', function(done){
 
 			
 			console.log("Starting test #9");
@@ -354,7 +356,7 @@ describe('nanoTimer', function(){
 			});
 		});
 
-		it('#10 setInterval - clearing the interval from within the task, zero timeout', function(done){
+		it('#11 setInterval - clearing the interval from within the task, zero timeout', function(done){
 
 			console.log("Starting test #10");
 			console.log("Clearing the interval from the task, zero timeout");
