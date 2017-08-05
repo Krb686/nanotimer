@@ -1,5 +1,5 @@
 # nanotimer
-# Current Version - 0.3.14
+# Current Version - 0.3.15
 
 ![](https://api.travis-ci.org/Krb686/nanoTimer.png)
 
@@ -247,6 +247,12 @@ timer.clearInterval();
 * Clears current running timeOut
 ```js
 timer.clearTimeout();
+```
+
+## .hasTimeout()
+* Returns true if the timer currently has a scheduled timeout, or false otherwise
+```js
+timer.hasTimeout();
 ```
 
 # Logging
